@@ -25,6 +25,10 @@ global:
     ## @param global.turbinia.servicePort Turbinia API service port (overrides `turbinia.service.port`)
     ##
     servicePort: 8000
+  dfdewey:
+    ## @param global.dfdewey.enabled Enables the dfDewey deployment along with Turbinia
+    ##
+    enabled: false
   yeti:
     ## @param global.yeti.enabled Enables the Yeti deployment (only used in the main OSDFIR Infrastructure Helm chart)
     ##
@@ -367,7 +371,13 @@ turbinia:
     ##
     override: turbinia.conf
     ## @param turbinia.config.disabledJobs List of Turbinia Jobs to disable. Overrides DISABLED_JOBS in the Turbinia config.
+    ##
     disabledJobs: "['BinaryExtractorJob', 'BulkExtractorJob', 'HindsightJob', 'PhotorecJob', 'VolatilityJob']"
+    ## @param turbinia.config.existingVertexSecret Name of existing secret containing Vertex API Key in order to enable the Turbinia LLM Artifacts Analyzer. The secret must contain the key `turbinia-vertexapi`
+    ## Please see https://ai.google.dev/tutorials/setup to generate your own API key.
+    ## e.g. kubectl create secret generic turbinia-vertexapi-secret --from-literal=turbinia-vertexapi=VERTEX_API_KEY
+    ##
+    existingVertexSecret: ""
   ## GCP configuration parameters
   ## IMPORTANT: Enable GCP when running Turbinia in a GKE cluster
   ##

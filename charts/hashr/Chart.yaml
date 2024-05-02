@@ -1,25 +1,25 @@
 apiVersion: v2
-name: yeti
-version: 1.0.2
-description: A Helm chart for Yeti Kubernetes deployments.
+name: hashr
+description: A Helm chart for HashR Kubernetes deployments.
+version: 0.1.0
+type: application
 keywords:
-- yeti
+- hashr
 - dfir
-- threatintel
-- threat-hunting
+- analysis
 - security
-home: "https://yeti-platform.io/"
+home: "https://github.com/google/hashr"
 dependencies:
-- condition: redis.enabled
-  name: redis
-  version: 18.0.4
+- condition: postgresql.enabled
+  name: postgresql
+  version: 14.3.3
   repository: https://charts.bitnami.com/bitnami
 maintainers:
   - name: Open Source DFIR
     email: osdfir-maintainers@googlegroups.com
     url: https://github.com/google/osdfir-infrastructure
 sources:
-- https://github.com/yeti-platform/yeti
+- https://github.com/google/hashr
 - https://github.com/google/osdfir-infrastructure
 appVersion: "latest"
 annotations:
