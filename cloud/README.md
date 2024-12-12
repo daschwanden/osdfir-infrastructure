@@ -39,6 +39,7 @@ gcloud services enable artifactregistry.googleapis.com \
                        pubsub.googleapis.com \
                        servicenetworking.googleapis.com \
                        serviceusage.googleapis.com \
+                       spanner.googleapis.com \
                        sqladmin.googleapis.com \
                        storage.googleapis.com
 ```

@@ -178,6 +178,23 @@ echo "REGION: $REGION"
 echo "ZONE: $ZONE"
 ```
 
+#### 2.2.0. Create the Cloud Spanner tables and indices
+
+```console
+git clone https://github.com/daschwanden/fleetspeak.git
+cd fleetspeak
+git checkout feature/spanner
+cd spanner-setup
+## --> inspect the setup.sh script and do the following
+## 1) comment out line #7 gcloud spanner databases create fleetspeak ...
+## 2) make sure the instance name matches your setup i.e. make sure it says '--instance fleetspeak'
+## 3) global substitute the instance name if required
+## 4) run the setup.sh script
+./setup.sh
+
+cd $REPO
+```
+
 #### 2.2.1. Fetch the GKE cluster credentials
 
 ```console
