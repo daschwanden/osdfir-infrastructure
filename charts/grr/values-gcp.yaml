@@ -33,7 +33,7 @@ fleetspeak:
   admin:
     ## @param fleetspeak.admin.image Sets the Fleetspeak admin container image to use.
     ##
-    image: "ghcr.io/google/fleetspeak:v0.1.17"
+    image: "europe-west1-docker.pkg.dev/repos-daschwanden/labs/fleetspeak:v0.1"
     ## @param fleetspeak.admin.listenPort Sets the Fleetspeak admin listen port to use.
     ##
     listenPort: 4444
@@ -47,7 +47,7 @@ fleetspeak:
     healthCheckPort: 8080
     ## @param fleetspeak.frontend.image Sets the Fleetspeak fronend container image to use.
     ##
-    image: "ghcr.io/google/fleetspeak:v0.1.17"
+    image: "europe-west1-docker.pkg.dev/repos-daschwanden/labs/fleetspeak:v0.1"
     ## @param fleetspeak.frontend.listenPort Sets the Fleetspeak frontend listen port to use.
     ##
     listenPort: 4443
@@ -62,22 +62,22 @@ fleetspeak:
     ##
     replicas: 1
 
-  mysqlDb:
-    ## @param fleetspeak.mysqlDb.address Sets the Fleetspeak DB address to use.
+  spanner:
+    ## @param fleetspeak.spanner.database Sets the Fleetspeak Spanner database to use.
     ##
-    address: "FLEETSPEAK_DB_ADDRESS"
-    ## @param fleetspeak.mysqlDb.name Sets the Fleetspeak DB name to use.
+    database: "fleetspeak"
+    ## @param fleetspeak.spanner.instance Sets the Fleetspeak Spanner instance to use.
     ##
-    name: "fleetspeak"
-    ## @param fleetspeak.mysqlDb.port Sets the Fleetspeak DB port to use.
+    instance: "fleetspeak"
+    ## @param fleetspeak.spanner.project Sets the Fleetspeak Spanner project to use.
     ##
-    port: 3306
-    ## @param fleetspeak.mysqlDb.userName Sets the Fleetspeak DB user name to use.
+    project: "PROJECT_ID"
+    ## @param fleetspeak.spanner.userName Sets the Fleetspeak Spanner PubSub message Topic to use.
     ##
-    userName: "fleetspeak-user"
-    ## @param fleetspeak.mysqlDb.userPassword Sets the Fleetspeak DB password to use.
+    topic: "fleetspeak-msg-topic"
+    ## @param fleetspeak.spanner.userPassword Sets the Fleetspeak Spanner PubSub message Subscription to use.
     ##
-    userPassword: "fleetspeak-password"
+    subscription: "fleetspeak-msg-sub"
 
 ## @section GRR parameters
 ##

@@ -364,7 +364,7 @@ resource "google_pubsub_subscription" "grr_fleetspeak_service_subscription" {
   topic = google_pubsub_topic.grr_fleetspeak_service_topic.id
 }
 
-resource "google_pubsub_topic_iam_member" "grr_fleetspeak_topic" {
+resource "google_pubsub_topic_iam_member" "grr_fleetspeak_publisher" {
   topic  = google_pubsub_topic.grr_fleetspeak_service_topic.name
   role   = "roles/pubsub.publisher"
   member = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/grr/sa/grr-sa"
@@ -381,6 +381,70 @@ resource "google_pubsub_subscription_iam_member" "grr_fleetspeak_subscriber" {
     google_container_cluster.osdfir_cluster
   ]
 }
+
+##########################################################################
+# Set up the Cloud Spanner database 
+##########################################################################
+resource "google_spanner_instance" "fleetspeak" {
+  name         = "fleetspeak"
+  config       = "regional-${var.region}"
+  display_name = "Fleetspeak"
+  num_nodes    = 1
+  edition      = "STANDARD"
+  default_backup_schedule_type = "AUTOMATIC"
+}
+
+resource "google_spanner_database" "fleetspeak" {
+  name     = "fleetspeak"
+  instance = google_spanner_instance.fleetspeak.name
+}
+
+resource "google_spanner_database_iam_member" "database_user" {
+  instance = google_spanner_instance.fleetspeak.name
+  database = google_spanner_database.fleetspeak.name
+  role     = "roles/spanner.databaseUser"
+  member      = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/grr/sa/grr-sa"
+  depends_on = [
+    google_container_cluster.osdfir_cluster
+  ]
+}
+
+##########################################################################
+# Set up the PubSub Topic and Subscriber for Fleetspeak Spanner Messages
+##########################################################################
+resource "google_pubsub_topic" "fleetspeak_msg_topic" {
+  name = "fleetspeak-msg-topic"
+
+  message_storage_policy {
+    allowed_persistence_regions = [
+      var.region,
+    ]
+  }
+}
+
+resource "google_pubsub_subscription" "fleetspeak_msg_sub" {
+  name  = "fleetspeak-msg-sub"
+  topic = google_pubsub_topic.fleetspeak_msg_topic.id
+}
+
+resource "google_pubsub_topic_iam_member" "fleetspeak_msg_publisher" {
+  topic  = google_pubsub_topic.fleetspeak_msg_topic.name
+  role   = "roles/pubsub.publisher"
+  member = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/grr/sa/grr-sa"
+  depends_on = [
+    google_container_cluster.osdfir_cluster
+  ]
+}
+
+resource "google_pubsub_subscription_iam_member" "fleetspeak_msg_subscriber" {
+  subscription = google_pubsub_subscription.fleetspeak_msg_sub.name
+  role         = "roles/pubsub.subscriber"
+  member      = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/grr/sa/grr-sa"
+  depends_on = [
+    google_container_cluster.osdfir_cluster
+  ]
+}
+
 
 ##########################################################################
 # Set up the Cloud SQL database 
@@ -435,21 +499,9 @@ resource "google_sql_database" "grr_database" {
   instance = google_sql_database_instance.instance.name
 }
 
-resource "google_sql_database" "fleetspeak_database" {
-  name     = "fleetspeak"
-  instance = google_sql_database_instance.instance.name
-}
-
 resource "google_sql_user" "grr_user" {
   name     = "grr-user"
   instance = google_sql_database_instance.instance.name
   host     = "%"
   password = "grr-password"
-}
-
-resource "google_sql_user" "fleetspeak_user" {
-  name     = "fleetspeak-user"
-  instance = google_sql_database_instance.instance.name
-  host     = "%"
-  password = "fleetspeak-password"
 }
