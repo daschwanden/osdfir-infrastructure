@@ -36,11 +36,6 @@ RUN PRI_KEY=$(cat /grr/exe/sign/keys/exe-sign-private-key.pem | sed ':a;N;$!ba;s
     sed -i "s'EXE_SIGN_PUBLIC_KEY'$PUB_KEY'g" /config/grr.server.yaml
 
 RUN mkdir /client_installers && \
-    cd /usr/src/grr/grr/client_builder && \
-    sed -i 's/5.13.2/6.12.0/g' setup.py && \
-    python setup.py sdist && \
-    cd - && \
-    pip install -U pyinstaller>=6.12.0 && \
     grr_config_updater repack_clients \
       --secondary_configs /config/grr.server.yaml
 
