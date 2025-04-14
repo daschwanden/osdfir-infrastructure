@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #FROM ghcr.io/google/grr:v3.4.9.0-release AS grr
-FROM ghcr.io/daschwanden/grr:feature-installer
+FROM ghcr.io/daschwanden/grr:feature-installer AS grr
 
 ARG FLEETSPEAK_FRONTEND
 ARG FLEETSPEAK_FRONTEND_PORT
