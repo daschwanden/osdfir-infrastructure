@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM europe-west1-docker.pkg.dev/osdfir-spanner-463606/containers/grr:s0.1 AS grr
+FROM europe-west1-docker.pkg.dev/osdfir-spanner-463606/containers/grr:s0.2 AS grr
 
 ARG FLEETSPEAK_FRONTEND
 ARG FLEETSPEAK_FRONTEND_PORT
