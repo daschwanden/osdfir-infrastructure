@@ -6,15 +6,16 @@ metadata:
   namespace: {{ .Values.grr.namespaceClient }}
   {{- end }}
   annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
     {{- if eq .Values.fleetspeak.frontend.expose "internal" }}
-    networking.gke.io/load-balancer-type: "Internal"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
     {{- else if eq .Values.fleetspeak.frontend.expose "external" }}
-    cloud.google.com/l4-rbs: "enabled"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     {{- end }}
 spec:
   {{- if or (eq .Values.fleetspeak.frontend.expose "internal") (eq .Values.fleetspeak.frontend.expose "external") }}
   type: LoadBalancer
-  loadBalancerIP: {{ .Values.fleetspeak.frontend.address }}
   {{- else }}
   type: NodePort
   {{- end }}

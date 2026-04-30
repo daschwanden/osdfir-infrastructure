@@ -53,14 +53,15 @@ fleetspeak:
     ##
     image: "ghcr.io/google/fleetspeak:v0.1.17"
     ## @param fleetspeak.frontend.address Sets the Fleetspeak frontend listen to use in a load balancer.
+    ## This will now be added as a DNS SAN
     ##
-    address: ""
+    address: "your-aws-nlb-name.elb.amazonaws.com" 
     ## @param fleetspeak.frontend.listenPort Sets the Fleetspeak frontend listen port to use.
     ##
     listenPort: 30443
     ## @param fleetspeak.frontend.expose Defines how to expose the fleetspeak frontend [node|internal|external]
     ##
-    expose: "node"
+    expose: "external"
     ## @param fleetspeak.frontend.neg Enables the creation of a istandalone Network Endpoint Group for the Fleetspeak frontend service.
     ## ref https://cloud.google.com/kubernetes-engine/docs/how-to/standalone-neg
     ##
