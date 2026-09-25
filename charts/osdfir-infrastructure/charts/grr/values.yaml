@@ -7,6 +7,9 @@ global:
   ## @param global.selfManagedMysql Enables a mySQL DB containter to be deployed into the cluster.
   ##
   selfManagedMysql: true
+  ## @param global.emulateSpanner Enables the Spanner emulator in a container deployed into the cluster.
+  ##
+  emulateSpanner: true
   ## @param global.useResourceRequests Allocates resources to the pods.
   ##
   useResourceRequests: false
@@ -93,6 +96,10 @@ fleetspeak:
     ## @param fleetspeak.frontend.replicas Sets the amount of Fleetspeak frontend pods to run.
     ##
     replicas: 1
+    spanner:
+      ## @param fleetspeak.frontend.spanner.image Sets the Fleetspeak fronend container image to use.
+      ##
+      image: "docker pull ghcr.io/google/fleetspeak:v0.1.19"
 
   mysqlDb:
     ## @param fleetspeak.mysqlDb.address Sets the Fleetspeak DB address to use.
