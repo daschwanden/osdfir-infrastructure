@@ -1,0 +1,36 @@
+{{- if .Values.fleetspeak.spanner.emulateSpanner }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grr-fleetspeak-create-spanner-database
+  {{- if .Values.grr.namespace }}
+  namespace: {{ .Values.grr.namespace }}
+  {{- end }}
+data:
+  createSpannerDatabase.sh: |
+    # 1) Fetch the setup files
+    curl -O https://raw.githubusercontent.com/google/fleetspeak/refs/heads/master/spanner-setup/fleetspeak.pb
+    curl -O https://raw.githubusercontent.com/google/fleetspeak/refs/heads/master/spanner-setup/setup.sh
+    # 2) Setup the Spanner Database and its Tables
+    bash setup.sh
+    #3) Set the environment variables
+    export PUBSUB_PROJECT_ID=spanner-emulator-project
+    export PUBSUB_EMULATOR_HOST=pubsub.default.svc.cluster.local:8085
+    #4) Install binaries
+    apt update
+    apt install git -y
+    apt install python3-pip -y
+    apt install python3.13-venv -y
+    # 5) Create venv
+    python3 -m venv $HOME/.venv
+    source $HOME/.venv/bin/activate
+    # 6) Clone the repo
+    git clone https://github.com/googleapis/python-pubsub.git
+    cd python-pubsub/samples/snippets
+    # 7) Install python dependencies
+    pip install -r requirements.txt
+    # 8) Create the PubSub Topic
+    python publisher.py spanner-emulator-project create fleetspeak-top
+    # 9) Create the PubSub Subscription
+    python subscriber.py spanner-emulator-project create fleetspeak-top fleetspeak-sub
+{{- end }}

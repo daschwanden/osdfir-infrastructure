@@ -29,7 +29,7 @@ spec:
             done
             echo "Fleetspeak Frontend health check is ready"
         - name: init-kaniko-env
-          image: {{ .Values.initContainer.image }}
+          image: {{ .Values.initContainer.ssl }}
           command: ["/bin/sh", "-c"]
           args:
           - |
