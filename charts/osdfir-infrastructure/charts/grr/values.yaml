@@ -117,10 +117,7 @@ fleetspeak:
     database: "fleetspeak"
     ## @param fleetspeak.spanner.emulateSpanner Emulates the use of Spanner with eumulator containers deployed into the cluster.
     ##
-    emulateSpanner: true
-    ## @param fleetspeak.spanner.image Sets the Fleetspeak frontend container image to use.
-    ##
-    image: "ghcr.io/google/fleetspeak:v0.1.18"
+    emulateSpanner: false
     ## @param fleetspeak.spanner.instance Sets the Spanner instance name for Fleetspeak on Spanner.
     ##
     instance: "fleetspeak-instance"
@@ -135,7 +132,7 @@ fleetspeak:
     topic: "fleetspeak-top"
     ## @param fleetspeak.spanner.useSpanner Enables the use of Spanner.
     ##
-    useSpanner: true
+    useSpanner: false
 
 ## @section GRR parameters
 ##
