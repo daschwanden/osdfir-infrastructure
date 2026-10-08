@@ -79,7 +79,7 @@ spec:
             - "--insecure"
             {{- end }}
             {{- if .Values.grr.daemon.image }}
-            - "--destination={{ .Values.grr.daemon.image }}"
+            - "--destination={{ default .Values.grr.daemon.image .Values.clientBuilder.imageOnRegistry }}"
             {{- else }}
             - "--no-push"
             - "--no-push-cache"

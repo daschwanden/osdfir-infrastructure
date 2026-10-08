@@ -22,6 +22,11 @@ clientBuilder:
   ## When empty, the address is derived from fleetspeak.frontend.address or the first Kubernetes node internal IP.
   ##
   address: ""
+  ## @param clientBuilder.imageOnRegistry Sets the externally reachable Fleetspeak address embedded in GRR client installers.
+  ## When empty, clientBuilder.imageOnRegistry defaults to daemon.image.
+  ## This is mainly helpful when working with minikube's registry addon.
+  ##
+  imageOnRegistry: ""
   ## @param clientBuilder.kanikoInsecure Sets the kaniko --insecure flag.
   ##
   kanikoInsecure: false
