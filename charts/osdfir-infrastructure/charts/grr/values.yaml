@@ -22,6 +22,9 @@ clientBuilder:
   ## When empty, the address is derived from fleetspeak.frontend.address or the first Kubernetes node internal IP.
   ##
   address: ""
+  ## @param clientBuilder.kanikoInsecure Sets the kaniko --insecure flag.
+  ##
+  kanikoInsecure: false
   ## @param clientBuilder.port Sets the externally reachable Fleetspeak port embedded in GRR client installers.
   ## When empty, fleetspeak.frontend.listenPort is used.
   ##

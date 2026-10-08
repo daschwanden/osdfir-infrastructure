@@ -75,6 +75,9 @@ spec:
             - "--build-arg=FLEETSPEAK_FRONTEND={{ $frontend }}"
             - "--build-arg=FLEETSPEAK_FRONTEND_PORT={{ $frontendPort }}"
             - "--build-arg=FLEETSPEAK_TRUSTED_CERT_B64={{ get $clientBuilder "trustedCert" | default "" | b64enc }}"
+            {{- if .Values.clientBuilder.kanikoInsecure }}
+            - "--insecure"
+            {{- end }}
             {{- if .Values.grr.daemon.image }}
             - "--destination={{ .Values.grr.daemon.image }}"
             {{- else }}
