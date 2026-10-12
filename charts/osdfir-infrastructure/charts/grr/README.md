@@ -11,6 +11,7 @@ git clone https://github.com/google/osdfir-infrastructure.git
 cd osdfir-infrastructure
 export REPO=$(pwd)
 ```
+
 ## 1. Quick Start
 
 A convenient way to get started is to run GRR on a `minikube` cluster.
@@ -40,6 +41,7 @@ helm install grr \
 # Wait for all pods to be in the 'running' state then port forward the GRR Admin UI.
 kubectl port-forward service/grr-grr-admin 8000:8000
 ```
+
 You can now point your browser to [http://localhost:8000](http://localhost:8000) to access the GRR Admin UI.
 
 
@@ -72,6 +74,7 @@ kubectl label nodes --overwrite minikube  grrclient=installed
 # Port forward the GRR Admin UI
 kubectl port-forward service/grr-grr-admin 8000:8000
 ```
+
 You can now point your browser to [http://localhost:8000](http://localhost:8000) to access the GRR Admin UI and run some test Flows.
 
 ## 2. Build clients for an external Fleetspeak address
