@@ -232,7 +232,15 @@ helm install grr \
   --set fleetspeak.spanner.emulateSpanner=true  \
   --set fleetspeak.spanner.useSpanner=true
 
-# Wait for all pods to be in the 'running' state
+# Wait for all pods to be in the 'running' state and the client builder job to complete
+kubectl get job
+# The output should look similar to the below:
+# NAME                     STATUS     COMPLETIONS   DURATION   AGE
+# grr-grr-client-builder   Complete   1/1           9m55s      11m
+kubectl wait --for=condition=complete job --all --timeout=900s
+# The output should look similar to the below:
+# job.batch/grr-grr-client-builder condition met
+
 # Label the minikube node with 'grrclient=installed' to get the GRR client installed in a daemonset. 
 kubectl get nodes
 kubectl label nodes --overwrite minikube  grrclient=installed
