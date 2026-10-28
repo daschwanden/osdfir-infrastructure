@@ -44,7 +44,7 @@ spec:
           done
           echo "Spanner subscription is ready"
       {{- end }}
-      {{- if .Values.global.selfManagedMysql }}
+      {{- if not .Values.fleetspeak.spanner.useSpanner }}
       - name: init-mysql-server
         image: {{ .Values.initContainer.image }}
         command: ['/bin/sh', '-c']
