@@ -222,7 +222,7 @@ export CLIENT_IMAGE=grr-client:v0.1
 
 helm install grr \
   "$REPO/charts/osdfir-infrastructure/charts/grr" \
-  --set clientBuilder.address="$NODE_IP"
+  --set clientBuilder.address="$NODE_IP" \
   --set-string clientBuilder.port=30443 \
   --set grr.fleetspeak.frontend.expose="node" \
   --set grr.fleetspeak.frontend.address="$NODE_IP"  \
