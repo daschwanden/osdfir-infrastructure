@@ -44,6 +44,7 @@ spec:
           done
           echo "Spanner subscription is ready"
       {{- end }}
+      {{- if .Values.global.selfManagedMysql }}
       - name: init-mysql-server
         image: {{ .Values.initContainer.image }}
         command: ['/bin/sh', '-c']
@@ -55,6 +56,7 @@ spec:
             sleep 5;
           done
           echo "MySQL server is ready";
+      {{- end }}
       - name: init-fleetspeak-admin
         image: {{ .Values.initContainer.image }}
         command: ["/bin/sh", "-c"]
@@ -100,7 +102,6 @@ spec:
           name: metrics
         command: ["/fleetspeak/bin/server"]
         args: ["-alsologtostderr"]
-        volumeMounts:
         volumeMounts:
         - name: fleetspeak-config-volume
           mountPath: /etc/fleetspeak-server

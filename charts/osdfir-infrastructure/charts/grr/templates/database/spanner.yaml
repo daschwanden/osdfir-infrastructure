@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: spanner-emulator
-        image: gcr.io/cloud-spanner-emulator/emulator
+        image: gcr.io/cloud-spanner-emulator/emulator:1.5.59
         ports:
         - name: grpc
           containerPort: 9010
@@ -68,7 +68,7 @@ spec:
     spec:
       containers:
       - name: pubsub-emulator
-        image: google/cloud-sdk:emulators
+        image: google/cloud-sdk:591.0.0-emulators
         command: ["gcloud", "beta", "emulators", "pubsub", "start"]
         args: ["--project=spanner-emulator-project", "--host-port=0.0.0.0:8085"]
         ports:

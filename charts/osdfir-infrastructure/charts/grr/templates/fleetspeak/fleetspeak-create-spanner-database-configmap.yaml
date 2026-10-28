@@ -13,24 +13,13 @@ data:
     curl -O https://raw.githubusercontent.com/google/fleetspeak/refs/heads/master/spanner-setup/setup.sh
     # 2) Setup the Spanner Database and its Tables
     bash setup.sh
-    #3) Set the environment variables
+    # 3) Set the environment variables
     export PUBSUB_PROJECT_ID=spanner-emulator-project
     export PUBSUB_EMULATOR_HOST=pubsub.default.svc.cluster.local:8085
-    #4) Install binaries
-    apt update
-    apt install git -y
-    apt install python3-pip -y
-    apt install python3.13-venv -y
-    # 5) Create venv
-    python3 -m venv $HOME/.venv
-    source $HOME/.venv/bin/activate
-    # 6) Clone the repo
-    git clone https://github.com/googleapis/python-pubsub.git
-    cd python-pubsub/samples/snippets
-    # 7) Install python dependencies
-    pip install -r requirements.txt
-    # 8) Create the PubSub Topic
-    python publisher.py spanner-emulator-project create fleetspeak-top
-    # 9) Create the PubSub Subscription
-    python subscriber.py spanner-emulator-project create fleetspeak-top fleetspeak-sub
+    # 4) Create the PubSub Topic
+    curl -X PUT "http://${PUBSUB_EMULATOR_HOST}/v1/projects/${PUBSUB_PROJECT_ID}/topics/fleetspeak-topic"
+    # 5) Create the PubSub Subscription
+    curl -X PUT "http://${PUBSUB_EMULATOR_HOST}/v1/projects/${PUBSUB_PROJECT_ID}/subscriptions/fleetspeak-sub" \
+      -H "Content-Type: application/json" \
+      -d "{\"topic\": \"projects/${PUBSUB_PROJECT_ID}/topics/fleetspeak-top\"}"
 {{- end }}

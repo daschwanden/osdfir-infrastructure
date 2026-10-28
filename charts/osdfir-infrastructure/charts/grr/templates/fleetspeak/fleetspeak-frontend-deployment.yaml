@@ -60,7 +60,7 @@ spec:
           subPath: server.services.config
       {{- if .Values.fleetspeak.spanner.emulateSpanner }}
       - name: init-spanner-setup
-        image: google/cloud-sdk:emulators
+        image: google/cloud-sdk:591.0.0-emulators
         command: ["/bin/sh", "-c"]
         args:
         - |
@@ -98,6 +98,7 @@ spec:
           mountPath: /stage/createSpannerDatabase.sh
           subPath: createSpannerDatabase.sh
       {{- end }}
+      {{- if .Values.global.selfManagedMysql }}
       - name: init-mysql-server
         image: {{ .Values.initContainer.image }}
         command: ['/bin/sh', '-c']
@@ -109,6 +110,7 @@ spec:
             sleep 5;
           done
           echo "MySQL server is ready";
+      {{- end }}
       containers:
       - name: fleetspeak-frontend
         image: {{ .Values.fleetspeak.frontend.image }}
