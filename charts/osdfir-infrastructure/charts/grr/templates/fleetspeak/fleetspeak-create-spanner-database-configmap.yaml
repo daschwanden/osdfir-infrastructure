@@ -17,7 +17,7 @@ data:
     export PUBSUB_PROJECT_ID=spanner-emulator-project
     export PUBSUB_EMULATOR_HOST=pubsub.default.svc.cluster.local:8085
     # 4) Create the PubSub Topic
-    curl -X PUT "http://${PUBSUB_EMULATOR_HOST}/v1/projects/${PUBSUB_PROJECT_ID}/topics/fleetspeak-topic"
+    curl -X PUT "http://${PUBSUB_EMULATOR_HOST}/v1/projects/${PUBSUB_PROJECT_ID}/topics/fleetspeak-top"
     # 5) Create the PubSub Subscription
     curl -X PUT "http://${PUBSUB_EMULATOR_HOST}/v1/projects/${PUBSUB_PROJECT_ID}/subscriptions/fleetspeak-sub" \
       -H "Content-Type: application/json" \
