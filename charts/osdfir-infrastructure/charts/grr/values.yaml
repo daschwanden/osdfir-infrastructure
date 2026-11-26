@@ -107,9 +107,9 @@ fleetspeak:
     ## @param fleetspeak.mysqlDb.userName Sets the Fleetspeak DB user name to use.
     ##
     userName: "fleetspeak-user"
-    ## @param fleetspeak.mysqlDb.userPassword Sets the Fleetspeak DB password to use.
+    ## @param fleetspeak.mysqlDb.userPassword Sets the Fleetspeak DB password to use. Auto-generated if left empty.
     ##
-    userPassword: "fleetspeak-password"
+    userPassword: ""
 
 ## @section GRR parameters
 ##
@@ -160,9 +160,9 @@ grr:
     ## @param grr.mysqlDb.userName Sets the GRR DB user name to use.
     ##
     userName: "grr-user"
-    ## @param grr.mysqlDb.userPassword Sets the GRR DB user password to use.
+    ## @param grr.mysqlDb.userPassword Sets the GRR DB user password to use. Auto-generated if left empty.
     ##
-    userPassword: "grr-password"
+    userPassword: ""
   worker:
     ## @param grr.worker.image Sets the GRR worker container image to use.
     ##

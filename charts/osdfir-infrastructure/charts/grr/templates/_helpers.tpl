@@ -108,3 +108,35 @@ Hash the inputs that determine a GRR client build.
 {{- $clientBuilder := .Values.clientBuilder | default dict -}}
 {{- printf "%s|%s|%s|%s|%s|%s|%s|%s" (include "grr.fleetspeakCertificateHash" .) (get $clientBuilder "trustedCert" | default "") .Values.grr.version (.Values.grr.daemon.image | default "") .Values.initContainer.image .Values.initContainer.kanikoImage .Chart.Version .Release.Name | sha256sum -}}
 {{- end }}
+
+{{/*
+Return the MySQL root password. If not set by the operator a random one is
+generated on first evaluation and cached in .Values so every template that
+includes this helper renders the same value.
+*/}}
+{{- define "grr.mysqlDb.rootPassword" -}}
+{{- if not .Values.grr.mysqlDb.rootPassword -}}
+{{- $_ := set .Values.grr.mysqlDb "rootPassword" (randAlphaNum 24) -}}
+{{- end -}}
+{{- .Values.grr.mysqlDb.rootPassword -}}
+{{- end -}}
+
+{{/*
+Return the GRR MySQL user password (generated if unset).
+*/}}
+{{- define "grr.mysqlDb.userPassword" -}}
+{{- if not .Values.grr.mysqlDb.userPassword -}}
+{{- $_ := set .Values.grr.mysqlDb "userPassword" (randAlphaNum 24) -}}
+{{- end -}}
+{{- .Values.grr.mysqlDb.userPassword -}}
+{{- end -}}
+
+{{/*
+Return the Fleetspeak MySQL user password (generated if unset).
+*/}}
+{{- define "fleetspeak.mysqlDb.userPassword" -}}
+{{- if not .Values.fleetspeak.mysqlDb.userPassword -}}
+{{- $_ := set .Values.fleetspeak.mysqlDb "userPassword" (randAlphaNum 24) -}}
+{{- end -}}
+{{- .Values.fleetspeak.mysqlDb.userPassword -}}
+{{- end -}}

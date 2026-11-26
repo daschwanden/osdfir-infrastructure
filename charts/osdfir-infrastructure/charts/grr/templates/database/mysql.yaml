@@ -21,9 +21,9 @@ metadata:
   namespace: {{ .Values.grr.namespace }}
   {{- end }}
 stringData:
-  fleetspeak-password: fleetspeak-password
-  grr-password: grr-password
-  mysql-password: password
+  fleetspeak-password: {{ include "fleetspeak.mysqlDb.userPassword" . | quote }}
+  grr-password: {{ include "grr.mysqlDb.userPassword" . | quote }}
+  mysql-password: {{ include "grr.mysqlDb.rootPassword" . | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
